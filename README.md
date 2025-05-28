@@ -8,6 +8,10 @@ This project is a simple yet insightful dashboard built using **ASP.NET Core MVC
 
 - 🔹 **Report 1: Total Sales**
   - Displays the total revenue as a single value card at the top.
+ 
+    ### Dashboard View
+![Dashboard](wwwroot/assets/Screenshot 2025-05-29 012351.png)
+
 
 - 🔹 **Report 2: Month-wise Sales Totals**
   - Visualized using a bar chart.
