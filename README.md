@@ -3,6 +3,8 @@
 ## 📊 Sales Reports Dashboard (.NET 7 MVC)
 
 This project is a simple yet insightful dashboard built using **ASP.NET Core MVC (.NET 7)** that visualizes sales data using **Chart.js**. It displays four distinct reports generated from a static dataset.
+![Screenshot 2025-05-29 012351](https://github.com/user-attachments/assets/ee79c1df-33fc-4384-b796-627f91f47af3)
+
 
 ## 🚀 Features
 
