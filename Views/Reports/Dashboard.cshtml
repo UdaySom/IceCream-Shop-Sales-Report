@@ -1,0 +1,54 @@
+﻿@{
+    ViewData["Title"] = "Ice Cream Parlour Sales Report";
+}
+
+<h2 class="text-center my-4">🍦 Ice Cream Parlour Sales Report</h2>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3">
+                        <a asp-controller="Reports" asp-action="TotalSales" class="text-decoration-none">Total Sales</a>
+                    </h5>
+                    @Html.Partial("_TotalSales")
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3">
+                        <a asp-controller="Reports" asp-action="MonthWiseSales" class="text-decoration-none">Month-wise Sales</a>
+                    </h5>
+                    @Html.Partial("_MonthWiseSales")
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3">
+                        <a asp-controller="Reports" asp-action="MostPopularItems" class="text-decoration-none">Most Popular Items</a>
+                    </h5>
+                    @Html.Partial("_MostPopularItems")
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center mb-3">
+                        <a asp-controller="Reports" asp-action="RevenueByItem" 
+                        class="text-decoration-none">Top 3 Revenue-Generating Items by Month</a>
+                    </h5>
+                    @Html.Partial("_RevenueByItem")
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

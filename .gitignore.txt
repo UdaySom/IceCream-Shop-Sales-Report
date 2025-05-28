@@ -1,0 +1,16 @@
+## Ignore Visual Studio files
+.vs/
+*.user
+*.suo
+
+## Build output
+bin/
+obj/
+
+## Runtime data
+*.log
+*.env
+
+## Sensitive files
+wwwroot/data.txt
+appsettings*.json

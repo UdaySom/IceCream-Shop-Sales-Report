@@ -1,0 +1,26 @@
+﻿@model IEnumerable<IceCreamParlour.Models.SalesRecord>
+
+<h2>Sample Sales Records</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>SKU</th>
+            <th>Unit Price</th>
+            <th>Quantity</th>
+            <th>Total Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var record in Model)
+        {
+            <tr>
+                <td>@record.Date.ToShortDateString()</td>
+                <td>@record.SKU</td>
+                <td>@record.UnitPrice</td>
+                <td>@record.Quantity</td>
+                <td>@record.TotalPrice</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,85 @@
+﻿@{
+    var months = ViewBag.RevenueMonths as List<string>;
+    var monthItemRevenue = ViewBag.MonthItemRevenue as Dictionary<string, Dictionary<string, decimal>>;
+}
+
+
+<div class="container">
+    <select id="monthSelector" class="form-select mb-4">
+        @foreach (var month in months)
+        {
+            <option value="@month">@DateTime.ParseExact(month, "yyyy-MM", null).ToString("MMMM yyyy")</option>
+        }
+    </select>
+
+    <canvas id="revenueChart" width="800" height="400"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2"></script>
+<script>
+    const rawData = @Html.Raw(Json.Serialize(monthItemRevenue));
+    const monthSelector = document.getElementById('monthSelector');
+    const ctxRevenue = document.getElementById('revenueChart').getContext('2d');
+    let chart;
+
+    function updateChart(month) {
+        const data = rawData[month];
+        const sortedItems = Object.entries(data).sort((a, b) => b[1] - a[1]);
+        const topItems = sortedItems.slice(0, 3);
+        const otherTotal = sortedItems.slice(3).reduce((sum, item) => sum + item[1], 0);
+
+        const labels = topItems.map(i => i[0]);
+        const values = topItems.map(i => i[1]);
+        if (otherTotal > 0) {
+            labels.push("Others");
+            values.push(otherTotal);
+        }
+
+        const backgroundColors = ['#FF6384', '#36A2EB', '#FFCE56', '#AAAAAA'];
+
+        if (chart) chart.destroy();
+        chart = new Chart(ctxRevenue, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: values,
+                    backgroundColor: backgroundColors
+                }]
+            },
+            options: {
+                plugins: {
+                    tooltip: {
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.label || '';
+                                const value = context.raw || 0;
+                                return `${label}: ₹${value.toFixed(2)}`;
+                            }
+                        }
+                    },
+                    datalabels: {
+                        formatter: (value, context) => {
+                            const total = context.chart.data.datasets[0].data.reduce((a, b) => a + b, 0);
+                            const percentage = (value / total * 100).toFixed(1);
+                            return `${percentage}%`;
+                        },
+                        color: '#fff',
+                        font: {
+                            weight: 'bold',
+                            size: 14
+                        }
+                    }
+                }
+            },
+            plugins: [ChartDataLabels]
+        });
+    }
+
+    monthSelector.addEventListener('change', (e) => {
+        updateChart(e.target.value);
+    });
+
+    updateChart(monthSelector.value); // Initial load
+</script>

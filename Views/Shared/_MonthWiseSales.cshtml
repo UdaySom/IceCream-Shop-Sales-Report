@@ -1,0 +1,26 @@
+﻿@{
+    var months = ViewBag.Months as List<string>;
+    var sales = ViewBag.Sales as List<decimal>;
+}
+<canvas id="salesChart" width="400" height="300"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const ctx1 = document.getElementById('salesChart').getContext('2d');
+    new Chart(ctx1, {
+        type: 'bar',
+        data: {
+            labels: @Html.Raw(Json.Serialize(months)),
+            datasets: [{
+                label: 'Total Sales (₹)',
+                data: @Html.Raw(Json.Serialize(sales)),
+                backgroundColor: 'rgba(54, 162, 235, 0.6)'
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: { beginAtZero: true }
+            }
+        }
+    });
+</script>

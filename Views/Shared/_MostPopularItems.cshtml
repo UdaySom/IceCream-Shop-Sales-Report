@@ -1,0 +1,59 @@
+﻿@{
+    var months = ViewBag.PopularMonths as List<string>;
+    var min = ViewBag.Min as List<int>;
+    var max = ViewBag.Max as List<int>;
+    var avg = ViewBag.Avg as List<double>;
+    var items = ViewBag.Items as List<string>;
+}
+
+<canvas id="popularChart" width="400" height="300"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const months = @Html.Raw(Json.Serialize(months));
+    const min = @Html.Raw(Json.Serialize(min));
+    const max = @Html.Raw(Json.Serialize(max));
+    const avg = @Html.Raw(Json.Serialize(avg));
+    const items = @Html.Raw(Json.Serialize(items)); // Now in JS scope
+
+    const ctxPopular = document.getElementById('popularChart').getContext('2d');
+    new Chart(ctxPopular, {
+        type: 'bar',
+        data: {
+            labels: months,
+            datasets: [
+                {
+                    label: 'Min Orders',
+                    data: min,
+                    backgroundColor: 'rgba(255, 99, 132, 0.6)'
+                },
+                {
+                    label: 'Avg Orders',
+                    data: avg,
+                    backgroundColor: 'rgba(54, 162, 235, 0.6)'
+                },
+                {
+                    label: 'Max Orders',
+                    data: max,
+                    backgroundColor: 'rgba(75, 192, 192, 0.6)'
+                }
+            ]
+        },
+        options: {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        afterLabel: function(context) {
+                            return 'Item: ' + items[context.dataIndex];
+                        }
+                    }
+                }
+            },
+            responsive: true,
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
